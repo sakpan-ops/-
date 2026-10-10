@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>المكتب القانوني</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
+    
+    body { 
+      background-color: #E9EBED; 
+      color: #1a2e12; 
+      display: flex; 
+      justify-content: center; 
+      align-items: center; 
+      min-height: 100vh; 
+      padding: 20px; 
+    }
+    
+    .card-container { max-width: 430px; width: 100%; }
+
+    /* الهيدر الرسمي للشعارات */
+    .official-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #ffffff;
+      padding: 12px 18px;
+      border-radius: 18px;
+      margin-bottom: 16px;
+      border: 1px solid #d4ded0;
+      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+    }
+    
+    .logo-frame {
+      width: 68px;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      background: transparent;
+    }
+    .official-logo {
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      display: block;
+      border: none;
+    }
+
+    .header-text {
+      text-align: center;
+      padding: 0 8px;
+    }
+    .header-text .title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 3px;
+    }
+    .header-text .sub {
+      font-size: 0.8rem;
+      color: #64748b;
+      font-weight: 600;
+    }
+
+    /* أزرار التبديل */
+    .tabs { 
+      display: flex; 
+      background: #ffffff; 
+      padding: 6px; 
+      border-radius: 14px; 
+      margin-bottom: 16px; 
+      border: 1px solid #d4ded0;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+    .tab-btn { 
+      flex: 1; 
+      padding: 11px; 
+      border: none; 
+      border-radius: 10px; 
+      background: transparent; 
+      color: #64748b; 
+      font-weight: 700; 
+      font-size: 1rem; 
+      cursor: pointer; 
+      transition: all 0.25s ease; 
+    }
+    
+    .tab-btn.active.tab-ahmed { 
+      background: #295D09; 
+      color: #ffffff; 
+      box-shadow: 0 4px 10px rgba(41, 93, 9, 0.25);
+    }
+    .tab-btn.active.tab-hassan { 
+      background: #0f3460; 
+      color: #ffffff; 
+      box-shadow: 0 4px 10px rgba(15, 52, 96, 0.25);
+    }
+
+    /* هيكل البطاقات العام */
+    .card { 
+      background-color: #ffffff; 
+      border-radius: 20px; 
+      padding: 26px 20px; 
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06); 
+      display: none; 
+    }
+    .card.active { display: block; }
+
+    .profile-img { 
+      width: 135px; 
+      height: 135px; 
+      border-radius: 50%; 
+      object-fit: cover; 
+      object-position: center top; 
+      margin: 0 auto 16px; 
+      display: block; 
+    }
+    
+    .card h1 { font-size: 1.35rem; text-align: center; margin-bottom: 6px; font-weight: 700; }
+    .card p.subtitle { font-size: 0.95rem; text-align: center; margin-bottom: 22px; }
+    
+    .info-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
+    .info-item { 
+      border-radius: 12px; 
+      padding: 14px 16px; 
+      font-size: 0.95rem; 
+      display: flex; 
+      flex-direction: column; 
+      gap: 4px; 
+    }
+    .info-item .label { font-size: 0.85rem; font-weight: 700; }
+    .info-item .value { line-height: 1.6; font-weight: 500; }
+
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+    .contact-btn { 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      gap: 8px; 
+      padding: 12px; 
+      border-radius: 12px; 
+      text-decoration: none; 
+      font-weight: 600; 
+      font-size: 0.9rem; 
+      color: #ffffff; 
+      transition: transform 0.15s, opacity 0.2s; 
+    }
+    .contact-btn:active { transform: scale(0.97); }
+    .contact-btn:hover { opacity: 0.92; }
+
+    .btn-ig { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+    .icon { width: 20px; height: 20px; fill: currentColor; }
+
+    .location-box {
+      border-radius: 12px; 
+      padding: 12px 14px; 
+      display: flex; 
+      align-items: center; 
+      gap: 12px; 
+    }
+    .loc-icon-wrap {
+      color: #ffffff; 
+      width: 38px; 
+      height: 38px; 
+      min-width: 38px; 
+      border-radius: 50%; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+    }
+    .loc-icon-wrap svg { width: 20px; height: 20px; fill: currentColor; }
+    .loc-details { display: flex; flex-direction: column; gap: 2px; }
+    .loc-title { font-size: 0.8rem; font-weight: 700; }
+    .loc-text { font-size: 0.9rem; font-weight: 600; line-height: 1.4; }
+
+    /* طابع بطاقة أحمد */
+    #card-ahmed { border: 1px solid #e1e8de; }
+    #card-ahmed .profile-img { border: 4px solid #AED36C; background-color: #f1f5ef; }
+    #card-ahmed h1 { color: #295D09; }
+    #card-ahmed p.subtitle { color: #5a7551; }
+    #card-ahmed .info-item { background: #f7faf5; border: 1px solid #e5ede0; }
+    #card-ahmed .info-item .label { color: #69AB3D; }
+    #card-ahmed .info-item .value { color: #25381f; }
+    #card-ahmed .btn-call { background-color: #295D09; }
+    #card-ahmed .btn-wa { background-color: #3b7c15; }
+    #card-ahmed .btn-tg { background-color: #55912d; }
+    #card-ahmed .location-box { background: #f0f5ee; border: 1px solid #d8e6d2; }
+    #card-ahmed .loc-icon-wrap { background: #295D09; }
+    #card-ahmed .loc-title { color: #69AB3D; }
+    #card-ahmed .loc-text { color: #295D09; }
+
+    /* طابع بطاقة حسن */
+    #card-hassan { border: 1px solid #dce5f0; }
+    #card-hassan .profile-img { border: 4px solid #7ea6cf; background-color: #f0f4f9; }
+    #card-hassan h1 { color: #0f3460; }
+    #card-hassan p.subtitle { color: #476282; }
+    #card-hassan .info-item { background: #f4f7fb; border: 1px solid #dde5f0; }
+    #card-hassan .info-item .label { color: #1e5f99; }
+    #card-hassan .info-item .value { color: #102a45; }
+    #card-hassan .btn-call { background-color: #0f3460; }
+    #card-hassan .btn-wa { background-color: #1a508b; }
+    #card-hassan .btn-tg { background-color: #2b70b8; }
+    #card-hassan .location-box { background: #eef3f9; border: 1px solid #d7e2f0; }
+    #card-hassan .loc-icon-wrap { background: #0f3460; }
+    #card-hassan .loc-title { color: #1e5f99; }
+    #card-hassan .loc-text { color: #0f3460; }
+  </style>
+</head>
+<body>
+
+  <div class="card-container">
+    <!-- الهيدر الرسمي بالشعارات -->
+    <div class="official-header">
+      <div class="logo-frame">
+        <img src="https://i.ibb.co/qM8ZzDLq/Screenshot.jpg" alt="شعار" class="official-logo">
+      </div>
+      
+      <div class="header-text">
+        <div class="title">جمهورية العراق</div>
+        <div class="sub">نقابة المحامين العراقيين</div>
+      </div>
+
+      <div class="logo-frame">
+        <img src="https://i.ibb.co/TBFmQkbf/IMG-20251230-170427-135.png" alt="شعار نقابة المحامين العراقيين" class="official-logo">
+      </div>
+    </div>
+
+    <!-- أزرار التبديل -->
+    <div class="tabs">
+      <button class="tab-btn active tab-ahmed" onclick="switchTab(0)">أحمد مسلم</button>
+      <button class="tab-btn tab-hassan" onclick="switchTab(1)">حسن خالد</button>
+    </div>
+
+    <!-- بطاقة المحامي أحمد مسلم الصكبان -->
+    <div class="card active" id="card-ahmed">
+      <img src="https://i.ibb.co/93qqV7fj/IMG-1931.jpg" alt="المحامي أحمد مسلم الصكبان" class="profile-img">
+      <h1>المحامي أحمد مسلم الصكبان</h1>
+      <p class="subtitle">استشارات قانونية وترافع</p>
+
+      <div class="info-list">
+        <div class="info-item">
+          <span class="label">المقر / التواجد</span>
+          <span class="value">محكمة استئناف كربلاء المقدسة</span>
+        </div>
+        <div class="info-item">
+          <span class="label">مجال العمل والخدمات</span>
+          <span class="value">للتوكل في كافة الدعاوى الشرعية والمدنية والجزائية وترويج المعاملات.</span>
+        </div>
+      </div>
+
+      <!-- أزرار التواصل لأحمد -->
+      <div class="contact-grid">
+        <a href="tel:+9647807493999" class="contact-btn btn-call">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.02-.24c1.12.37 2.33.57 3.57.57a1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.45.57 3.57a1 1 0 01-.25 1.02l-2.2 2.2z"/></svg>
+          <span>اتصال</span>
+        </a>
+        <a href="https://wa.me/9647807493999" target="_blank" class="contact-btn btn-wa">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0012.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.23 8.23 0 012.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 01-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.66c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.02-1.24-.74-.66-1.24-1.48-1.39-1.73-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.13-.15.17-.25.25-.42.08-.17.04-.32-.02-.45-.06-.13-.56-1.35-.77-1.85-.2-.49-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.78 2.72 4.31 3.81.6.26 1.07.42 1.44.53.61.19 1.16.17 1.6.1.49-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.11-.23-.17-.48-.29z"/></svg>
+          <span>واتساب</span>
+        </a>
+        <a href="https://t.me/lwa97" target="_blank" class="contact-btn btn-tg">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.75-.55 2.92-1.27 4.86-2.11 5.83-2.52 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
+          <span>تليغرام</span>
+        </a>
+        <a href="https://instagram.com/lw_az6" target="_blank" class="contact-btn btn-ig">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          <span>إنستغرام</span>
+        </a>
+      </div>
+
+      <div class="location-box">
+        <div class="loc-icon-wrap">
+          <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg>
+        </div>
+        <div class="loc-details">
+          <span class="loc-title">العنوان / الموقع</span>
+          <span class="loc-text">كربلاء _ قضاء الحسينية _ الطف _ البوحويمد</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- بطاقة المحامي حسن خالد المحمد -->
+    <div class="card" id="card-hassan">
+      <img src="https://i.ibb.co/SDQjnHp1/IMG-469.jpg" alt="المحامي حسن خالد المحمد" class="profile-img">
+      <h1>المحامي حسن خالد المحمد</h1>
+      <p class="subtitle">استشارات قانونية وترافع</p>
+
+      <div class="info-list">
+        <div class="info-item">
+          <span class="label">المقر / التواجد</span>
+          <span class="value">محكمة استئناف كربلاء المقدسة</span>
+        </div>
+        <div class="info-item">
+          <span class="label">مجال العمل والخدمات</span>
+          <span class="value">للتوكل في كافة الدعاوى الشرعية والمدنية والجزائية وترويج المعاملات.</span>
+        </div>
+      </div>
+
+      <!-- أزرار التواصل لحسن (تم تعديل يوزر الإنستغرام إلى hvr__21) -->
+      <div class="contact-grid">
+        <a href="tel:+9647813826020" class="contact-btn btn-call">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.02-.24c1.12.37 2.33.57 3.57.57a1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.45.57 3.57a1 1 0 01-.25 1.02l-2.2 2.2z"/></svg>
+          <span>اتصال</span>
+        </a>
+        <a href="https://wa.me/9647813826020" target="_blank" class="contact-btn btn-wa">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0012.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.23 8.23 0 012.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 01-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.66c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.02-1.24-.74-.66-1.24-1.48-1.39-1.73-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.13-.15.17-.25.25-.42.08-.17.04-.32-.02-.45-.06-.13-.56-1.35-.77-1.85-.2-.49-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.78 2.72 4.31 3.81.6.26 1.07.42 1.44.53.61.19 1.16.17 1.6.1.49-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.11-.23-.17-.48-.29z"/></svg>
+          <span>واتساب</span>
+        </a>
+        <a href="https://t.me/hvr_22" target="_blank" class="contact-btn btn-tg">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.75-.55 2.92-1.27 4.86-2.11 5.83-2.52 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
+          <span>تليغرام</span>
+        </a>
+        <a href="https://instagram.com/hvr__21" target="_blank" class="contact-btn btn-ig">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          <span>إنستغرام</span>
+        </a>
+      </div>
+
+      <div class="location-box">
+        <div class="loc-icon-wrap">
+          <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg>
+        </div>
+        <div class="loc-details">
+          <span class="loc-title">العنوان / الموقع</span>
+          <span class="loc-text">كربلاء _ قضاء الحسينية _ الطف _ البوحويمد</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function switchTab(index) {
+      const tabs = document.querySelectorAll('.tab-btn');
+      const cards = document.querySelectorAll('.card');
+      tabs.forEach((tab, i) => tab.classList.toggle('active', i === index));
+      cards.forEach((card, i) => card.classList.toggle('active', i === index));
+    }
+  </script>
+
+</body>
+</html>
